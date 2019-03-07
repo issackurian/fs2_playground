@@ -69,4 +69,8 @@ object Exercises2 {
 
     in => go(in, item).stream
   }
+
+  def intersperse2[F[_],O](item: O): Pipe[F,O,O] =
+    in => in.scanChunks(item) { (_, c) => (item, c.flatMap(Chunk(_, item)))
+    }
 }
